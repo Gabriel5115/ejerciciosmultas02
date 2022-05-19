@@ -43,7 +43,7 @@ public interface MultaPLRepository extends JpaRepository<MultaPL, Long>{
 	List<Object[]> countByAgente();
 
 	@Query("SELECT COUNT(m.infraccion), m.infraccion FROM MultaPL m GROUP BY m.infraccion")
-	List<Object[]> countByInfraccion();
+	List<Object[]> countByInfraccionGroup();
 	
 	@Query("SELECT COUNT(m.infraccion), m.infraccion FROM MultaPL m GROUP BY m.infraccion")
 	Map<InfraccionPL, Integer> findInfraccion();

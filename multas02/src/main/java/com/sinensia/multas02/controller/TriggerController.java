@@ -86,7 +86,7 @@ public class TriggerController {
 	@GetMapping("/multas/count/infraccion")
 	public List<Object[]> countMultasByInfraccion(){
 		
-		return multaPLRepository.countByInfraccion();
+		return multaPLRepository.countByInfraccionGroup();
 	}
 	
 	@GetMapping("/multas/count/estadisticaasmap")
@@ -94,13 +94,14 @@ public class TriggerController {
 		
 		Map<InfraccionPL, Integer> resultado = new TreeMap<>();
 		
-		List<Object[]> resultadoAsList = multaPLRepository.countByInfraccion();;
+		List<Object[]> resultadoAsList = multaPLRepository.countByInfraccionGroup();;
 		
-		resultadoAsList.stream().forEach(x -> {
+		resultadoAsList.stream()
+		.forEach(x -> {
 			
 			Object[] fila = (Object[]) x;
 			
-			resultado.put((InfraccionPL) fila[0], (Integer) ( fila[1]));
+			resultado.put((InfraccionPL) fila[0], ((Long) fila[1]).intValue());
 		});
 		
 		return resultado;
