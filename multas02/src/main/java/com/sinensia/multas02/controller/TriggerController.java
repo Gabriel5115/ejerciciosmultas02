@@ -2,6 +2,8 @@ package com.sinensia.multas02.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.transaction.Transactional;
 
@@ -87,7 +89,28 @@ public class TriggerController {
 		return multaPLRepository.countByInfraccion();
 	}
 	
+	@GetMapping("/multas/count/estadisticaasmap")
+	Map<InfraccionPL, Integer> findInfraccionesByGroupAsMap(){
+		
+		Map<InfraccionPL, Integer> resultado = new TreeMap<>();
+		
+		List<Object[]> resultadoAsList = multaPLRepository.countByInfraccion();;
+		
+		resultadoAsList.stream().forEach(x -> {
+			
+			Object[] fila = (Object[]) x;
+			
+			resultado.put((InfraccionPL) fila[0], (Integer) ( fila[1]));
+		});
+		
+		return resultado;
+	}
 	
+	@GetMapping("/multas/intermedios")
+	public List<Object[]> getIntermedios(){
+		
+		return multaPLRepository.getResultadoIntermedios();
+	}
 	
 	
 	
@@ -96,7 +119,7 @@ public class TriggerController {
 	@GetMapping("/agentes/{nombre}")
 	public List<AgentePL> getAgenteByNombre(@PathVariable(name = "nombre") String nombre){
 		
-		return agentePLRepository.getByNombre(nombre);
+		return agentePLRepository.getByNombreIgnoreCase(nombre);
 	}
 	
 	
@@ -104,7 +127,7 @@ public class TriggerController {
 	public List<AgentePL> getAgenteByLike(@PathVariable(name = "expresion") String expresion){
 		
 		
-		return agentePLRepository.findByLikeExpresion(expresion);
+		return agentePLRepository.findByLikeExpresionIgnoreCase(expresion);
 	}
 	
 	

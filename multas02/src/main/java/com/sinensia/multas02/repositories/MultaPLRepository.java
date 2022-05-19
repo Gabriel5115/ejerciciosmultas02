@@ -2,6 +2,7 @@ package com.sinensia.multas02.repositories;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -43,7 +44,12 @@ public interface MultaPLRepository extends JpaRepository<MultaPL, Long>{
 
 	@Query("SELECT COUNT(m.infraccion), m.infraccion FROM MultaPL m GROUP BY m.infraccion")
 	List<Object[]> countByInfraccion();
-
+	
+	@Query("SELECT COUNT(m.infraccion), m.infraccion FROM MultaPL m GROUP BY m.infraccion")
+	Map<InfraccionPL, Integer> findInfraccion();
+	
+	@Query("SELECT m.agente, m.vehiculo, COUNT(m.vehiculo) FROM MultaPL m GROUP BY m.agente.codigo, m.vehiculo.matricula ORDER BY m.agente.codigo")
+	List<Object[]> getResultadoIntermedios();
 
 
 }

@@ -13,11 +13,11 @@ import com.sinensia.multas02.model.AgentePL;
 public interface AgentePLRepository extends JpaRepository<AgentePL, Long>{
 	
 	
-	List<AgentePL> getByNombre(String nombre);
+	List<AgentePL> getByNombreIgnoreCase(String nombre);
 	
 	
 	
 		
 	@Query("SELECT a FROM AgentePL a WHERE a.nombre LIKE %:expresion% OR a.apellido1 LIKE %:expresion% OR a.apellido2 LIKE %:expresion%")
-	List<AgentePL> findByLikeExpresion(String expresion);
+	List<AgentePL> findByLikeExpresionIgnoreCase(String expresion);
 }
